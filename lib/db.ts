@@ -2,7 +2,61 @@ import fs from "fs";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 import path from "path";
-import { DbSchema } from "./types";
+import mongoose from "mongoose";
+import { DbSchema, User, Device, LocationPing, DeviceEvent, Command } from "./types";
+import { UserModel, DeviceModel, LocationPingModel, EventModel, CommandModel } from "./mongooseModels";
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+class MongoDbAdapter {
+  data: DbSchema;
+
+  constructor() {
+    this.data = {
+      users: [],
+      devices: [],
+      locationPings: [],
+      events: [],
+      commands: [],
+    };
+  }
+
+  async read() {
+    if (!MONGODB_URI) return;
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(MONGODB_URI);
+    }
+    const [users, devices, locationPings, events, commands] = await Promise.all([
+      UserModel.find().lean(),
+      DeviceModel.find().lean(),
+      LocationPingModel.find().lean(),
+      EventModel.find().lean(),
+      CommandModel.find().lean(),
+    ]);
+
+    this.data = {
+      users: (users || []) as unknown as User[],
+      devices: (devices || []) as unknown as Device[],
+      locationPings: (locationPings || []) as unknown as LocationPing[],
+      events: (events || []) as unknown as DeviceEvent[],
+      commands: (commands || []) as unknown as Command[],
+    };
+  }
+
+  async write() {
+    if (!MONGODB_URI) return;
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(MONGODB_URI);
+    }
+    await Promise.all([
+      ...this.data.users.map((u) => UserModel.updateOne({ id: u.id }, u, { upsert: true })),
+      ...this.data.devices.map((d) => DeviceModel.updateOne({ id: d.id }, d, { upsert: true })),
+      ...this.data.locationPings.map((l) => LocationPingModel.updateOne({ id: l.id }, l, { upsert: true })),
+      ...this.data.events.map((e) => EventModel.updateOne({ id: e.id }, e, { upsert: true })),
+      ...this.data.commands.map((c) => CommandModel.updateOne({ id: c.id }, c, { upsert: true })),
+    ]);
+  }
+}
 
 const isVercel = process.env.VERCEL || process.env.NODE_ENV === "production";
 const file = isVercel
@@ -19,10 +73,16 @@ const defaultData: DbSchema = {
 
 declare global {
   // eslint-disable-next-line no-var
-  var __phonefind_db__: Low<DbSchema> | undefined;
+  var __phonefind_db__: { data: DbSchema; read(): Promise<void>; write(): Promise<void> } | undefined;
 }
 
 async function createDb() {
+  if (MONGODB_URI) {
+    const mongoAdapter = new MongoDbAdapter();
+    await mongoAdapter.read();
+    return mongoAdapter;
+  }
+
   if (isVercel && !fs.existsSync(file)) {
     const seedFile = path.join(process.cwd(), "data", "db.json");
     if (fs.existsSync(seedFile)) {
