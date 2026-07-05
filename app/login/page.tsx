@@ -61,7 +61,7 @@ export default function LoginPage() {
               <img src="/favicon.svg" alt="PhoneFind Logo" className="w-full h-full object-contain" />
             </div>
             <div>
-              <h1 className="text-lg font-mono font-bold tracking-tight uppercase">PHONEFIND</h1>
+              <h1 className="text-lg font-mono font-bold tracking-tight">PhoneFind</h1>
               <p className="text-[11px] font-mono text-neutral-500">HARDWARE SECURITY PORTAL</p>
             </div>
           </div>

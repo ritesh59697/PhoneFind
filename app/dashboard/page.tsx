@@ -109,7 +109,7 @@ export default function DashboardPage() {
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-xl font-mono font-bold tracking-tight uppercase">PHONEFIND</h1>
+                <h1 className="text-xl font-mono font-bold tracking-tight">PhoneFind</h1>
                 <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded border-2 border-emerald-500 bg-emerald-500/10 text-emerald-500 tracking-wider">
                   NEO-SYSTEM v1.0
                 </span>
