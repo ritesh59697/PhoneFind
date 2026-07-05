@@ -22,7 +22,6 @@
     "uuid": "^14.0.1"
   },
   "devDependencies": {
-    "@postcss/config": "^1.0.0",
     "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
