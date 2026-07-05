@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String   @id
+  email         String   @unique
+  passwordHash  String
+  backupContact String?
+  createdAt     String
+}
+
+model Device {
+  id            String   @id
+  userId        String
+  imei          String
+  deviceModel   String
+  fcmToken      String?
+  simSerialHash String?
+  lastSeenAt    String?
+  status        String   @default("active")
+  createdAt     String
+}
+
+model LocationPing {
+  id         String   @id
+  deviceId   String
+  latitude   Float
+  longitude  Float
+  batteryPct Int?
+  capturedAt String
+  syncedAt   String
+}
+
+model DeviceEvent {
+  id        String   @id
+  deviceId  String
+  type      String
+  metadata  Json?
+  createdAt String
+}
+
+model Command {
+  id         String   @id
+  deviceId   String
+  type       String
+  status     String   @default("pending")
+  issuedAt   String
+  executedAt String?
+}
