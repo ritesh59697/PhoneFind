@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { apiFetch, getToken, clearToken } from "@/lib/client/api";
+import DeviceMap from "./DeviceMap";
 
 interface LocationPing {
   latitude: number;
@@ -123,18 +124,19 @@ export default function DashboardPage() {
             </div>
 
             {device.lastLocation ? (
-              <p className="text-sm text-neutral-600 mb-3">
-                Last seen at {device.lastLocation.latitude.toFixed(5)},{" "}
-                {device.lastLocation.longitude.toFixed(5)} on{" "}
-                {new Date(device.lastLocation.capturedAt).toLocaleString()}
-                {device.lastLocation.batteryPct !== null &&
-                  ` — battery ${device.lastLocation.batteryPct}%`}
-              </p>
+              <DeviceMap
+                latitude={device.lastLocation.latitude}
+                longitude={device.lastLocation.longitude}
+                capturedAt={device.lastLocation.capturedAt}
+                batteryPct={device.lastLocation.batteryPct}
+              />
             ) : (
-              <p className="text-sm text-neutral-400 mb-3">No location reported yet.</p>
+              <div className="my-3 p-3 bg-neutral-900/40 border border-neutral-800 rounded-lg text-xs text-neutral-400">
+                No location reported yet. Tap <strong>Locate</strong> below to request device GPS position.
+              </div>
             )}
 
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap mt-4">
               {Object.entries(COMMAND_LABELS).map(([type, label]) => (
                 <button
                   key={type}
