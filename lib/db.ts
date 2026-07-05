@@ -23,38 +23,46 @@ class MongoDbAdapter {
 
   async read() {
     if (!MONGODB_URI) return;
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(MONGODB_URI);
-    }
-    const [users, devices, locationPings, events, commands] = await Promise.all([
-      UserModel.find().lean(),
-      DeviceModel.find().lean(),
-      LocationPingModel.find().lean(),
-      EventModel.find().lean(),
-      CommandModel.find().lean(),
-    ]);
+    try {
+      if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+      }
+      const [users, devices, locationPings, events, commands] = await Promise.all([
+        UserModel.find().lean(),
+        DeviceModel.find().lean(),
+        LocationPingModel.find().lean(),
+        EventModel.find().lean(),
+        CommandModel.find().lean(),
+      ]);
 
-    this.data = {
-      users: (users || []) as unknown as User[],
-      devices: (devices || []) as unknown as Device[],
-      locationPings: (locationPings || []) as unknown as LocationPing[],
-      events: (events || []) as unknown as DeviceEvent[],
-      commands: (commands || []) as unknown as Command[],
-    };
+      this.data = {
+        users: (users || []) as unknown as User[],
+        devices: (devices || []) as unknown as Device[],
+        locationPings: (locationPings || []) as unknown as LocationPing[],
+        events: (events || []) as unknown as DeviceEvent[],
+        commands: (commands || []) as unknown as Command[],
+      };
+    } catch (err) {
+      console.error("MongoDB Atlas read error:", err);
+    }
   }
 
   async write() {
     if (!MONGODB_URI) return;
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(MONGODB_URI);
+    try {
+      if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+      }
+      await Promise.all([
+        ...this.data.users.map((u) => UserModel.updateOne({ id: u.id }, u, { upsert: true })),
+        ...this.data.devices.map((d) => DeviceModel.updateOne({ id: d.id }, d, { upsert: true })),
+        ...this.data.locationPings.map((l) => LocationPingModel.updateOne({ id: l.id }, l, { upsert: true })),
+        ...this.data.events.map((e) => EventModel.updateOne({ id: e.id }, e, { upsert: true })),
+        ...this.data.commands.map((c) => CommandModel.updateOne({ id: c.id }, c, { upsert: true })),
+      ]);
+    } catch (err) {
+      console.error("MongoDB Atlas write error:", err);
     }
-    await Promise.all([
-      ...this.data.users.map((u) => UserModel.updateOne({ id: u.id }, u, { upsert: true })),
-      ...this.data.devices.map((d) => DeviceModel.updateOne({ id: d.id }, d, { upsert: true })),
-      ...this.data.locationPings.map((l) => LocationPingModel.updateOne({ id: l.id }, l, { upsert: true })),
-      ...this.data.events.map((e) => EventModel.updateOne({ id: e.id }, e, { upsert: true })),
-      ...this.data.commands.map((c) => CommandModel.updateOne({ id: c.id }, c, { upsert: true })),
-    ]);
   }
 }
 
@@ -78,9 +86,13 @@ declare global {
 
 async function createDb() {
   if (MONGODB_URI) {
-    const mongoAdapter = new MongoDbAdapter();
-    await mongoAdapter.read();
-    return mongoAdapter;
+    try {
+      const mongoAdapter = new MongoDbAdapter();
+      await mongoAdapter.read();
+      return mongoAdapter;
+    } catch (err) {
+      console.error("MongoDB initialization failed, falling back to file DB:", err);
+    }
   }
 
   if (isVercel && !fs.existsSync(file)) {
@@ -108,7 +120,11 @@ export async function getDb() {
   if (!global.__phonefind_db__) {
     global.__phonefind_db__ = await createDb();
   } else {
-    await global.__phonefind_db__.read();
+    try {
+      await global.__phonefind_db__.read();
+    } catch (e) {
+      console.error("Failed db read:", e);
+    }
   }
   return global.__phonefind_db__;
 }
