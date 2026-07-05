@@ -27,6 +27,20 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pendingCommand, setPendingCommand] = useState<string | null>(null);
+  const [darkMode, setDarkMode] = useState<boolean>(true);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("phonefind_theme");
+    if (savedTheme) {
+      setDarkMode(savedTheme === "dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextMode = !darkMode;
+    setDarkMode(nextMode);
+    localStorage.setItem("phonefind_theme", nextMode ? "dark" : "light");
+  };
 
   const loadDevices = useCallback(async () => {
     try {
@@ -71,40 +85,68 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-6 text-neutral-400">
-        <div className="flex items-center gap-3">
-          <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-medium">Loading security dashboard...</span>
+      <div className={`min-h-screen flex items-center justify-center p-6 ${darkMode ? "bg-neutral-950 text-neutral-400" : "bg-stone-50 text-stone-600"}`}>
+        <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-widest">
+          <div className="w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+          <span>INITIALIZING MONITORING CONSOLE...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 antialiased selection:bg-emerald-500 selection:text-white">
-      <div className="max-w-3xl mx-auto p-6 md:p-10">
-        {/* Header Bar */}
-        <header className="flex items-center justify-between pb-8 mb-8 border-b border-neutral-800">
+    <div className={`min-h-screen transition-colors ${darkMode ? "bg-neutral-950 text-neutral-100 selection:bg-emerald-500 selection:text-white" : "bg-stone-50 text-stone-900 selection:bg-stone-900 selection:text-white"}`}>
+      <div className="max-w-4xl mx-auto p-6 md:p-10 font-sans">
+        {/* Header Console Bar */}
+        <header className={`flex items-center justify-between pb-6 mb-8 border-b ${darkMode ? "border-neutral-800" : "border-stone-300"}`}>
           <div className="flex items-center gap-3.5">
-            <img src="/logo.png" alt="PhoneFind Logo" className="w-10 h-10 rounded-xl shadow-md" />
+            <div className={`w-10 h-10 rounded-xl border flex items-center justify-center p-2 ${darkMode ? "bg-neutral-900 border-neutral-800" : "bg-white border-stone-300 shadow-sm"}`}>
+              <img src="/favicon.svg" alt="PhoneFind Logo" className="w-full h-full object-contain" />
+            </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-white">PhoneFind</h1>
-              <p className="text-xs text-neutral-400">Device Security & Tracking Portal</p>
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg font-mono font-bold tracking-tight uppercase">PHONEFIND</h1>
+                <span className="font-mono text-[10px] px-2 py-0.5 rounded border border-emerald-500/40 text-emerald-500 font-semibold uppercase tracking-wider">v1.0</span>
+              </div>
+              <p className="text-[11px] font-mono text-neutral-500">HARDWARE SECURITY & GPS CONSOLE</p>
             </div>
           </div>
-          <button
-            onClick={logout}
-            className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-white transition-all"
-          >
-            <svg className="w-4 h-4 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>Log out</span>
-          </button>
+
+          <div className="flex items-center gap-2.5">
+            {/* Light / Dark Mode Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              className={`p-2.5 rounded-lg border transition-all ${darkMode ? "bg-neutral-900 hover:bg-neutral-800 border-neutral-800 text-amber-400" : "bg-white hover:bg-stone-100 border-stone-300 text-stone-700 shadow-sm"}`}
+            >
+              {darkMode ? (
+                /* Sun Icon for switching to light */
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                /* Moon Icon for switching to dark */
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
+
+            {/* Logout Button */}
+            <button
+              onClick={logout}
+              className={`inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-3.5 py-2.5 rounded-lg border transition-all ${darkMode ? "bg-neutral-900 hover:bg-neutral-800 border-neutral-800 text-neutral-300 hover:text-white" : "bg-white hover:bg-stone-100 border-stone-300 text-stone-800 shadow-sm"}`}
+            >
+              <svg className="w-4 h-4 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span className="hidden sm:inline">DISCONNECT</span>
+            </button>
+          </div>
         </header>
 
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-950/50 border border-red-800/60 text-red-200 text-xs flex items-center gap-2">
+          <div className="mb-6 p-4 rounded-lg bg-red-950/60 border border-red-800/80 text-red-200 text-xs font-mono flex items-center gap-2.5">
             <svg className="w-4 h-4 text-red-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -113,111 +155,113 @@ export default function DashboardPage() {
         )}
 
         {devices.length === 0 && (
-          <div className="p-8 text-center bg-neutral-900/50 border border-neutral-800 rounded-2xl">
-            <div className="w-12 h-12 rounded-2xl bg-neutral-800/80 border border-neutral-700/60 flex items-center justify-center mx-auto mb-4 text-emerald-400">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className={`p-8 text-center border rounded-xl ${darkMode ? "bg-neutral-900/40 border-neutral-800" : "bg-white border-stone-300 shadow-sm"}`}>
+            <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-3 text-emerald-500">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
-            <h3 className="text-base font-semibold text-white mb-1">No Devices Registered</h3>
-            <p className="text-xs text-neutral-400 max-w-sm mx-auto">
-              Install the PhoneFind app on your Android phone and log in with this account to pair your device.
+            <h3 className="text-sm font-mono font-bold uppercase tracking-wider mb-1">NO REGISTERED DEVICES DETECTED</h3>
+            <p className="text-xs text-neutral-500 max-w-sm mx-auto">
+              Install the PhoneFind Android client app on your target device and log in with this account.
             </p>
           </div>
         )}
 
-        {/* Devices List */}
+        {/* Minimalist Brutalist Device Cards */}
         <div className="space-y-6">
           {devices.map((device) => (
-            <div key={device.id} className="bg-neutral-900/60 border border-neutral-800/90 rounded-2xl p-5 md:p-6 backdrop-blur-sm shadow-xl">
-              {/* Card Top Details */}
+            <div key={device.id} className={`border rounded-xl p-5 md:p-6 transition-all ${darkMode ? "bg-neutral-900/60 border-neutral-800" : "bg-white border-stone-300 shadow-sm"}`}>
+              {/* Card Header */}
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <div className="flex items-center gap-2.5 mb-1">
-                    <h2 className="text-base font-bold text-white">{device.deviceModel}</h2>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-mono text-[10px] uppercase font-bold tracking-widest text-emerald-500">TARGET //</span>
+                    <h2 className="text-base font-mono font-bold tracking-tight">{device.deviceModel}</h2>
                   </div>
-                  <p className="text-xs font-mono text-neutral-400">IMEI: {device.imei}</p>
+                  <p className="text-xs font-mono text-neutral-500">IMEI: {device.imei}</p>
                 </div>
                 <span
-                  className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border ${
+                  className={`inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-md border ${
                     device.status === "lost"
-                      ? "bg-red-950/80 text-red-300 border-red-800/60"
+                      ? "bg-red-500/10 text-red-500 border-red-500/30"
                       : device.status === "locked"
-                      ? "bg-amber-950/80 text-amber-300 border-amber-800/60"
-                      : "bg-emerald-950/80 text-emerald-300 border-emerald-800/60"
+                      ? "bg-amber-500/10 text-amber-500 border-amber-500/30"
+                      : "bg-emerald-500/10 text-emerald-500 border-emerald-500/30"
                   }`}
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full ${device.status === "active" ? "bg-emerald-400" : "bg-red-400"}`} />
-                  <span className="capitalize">{device.status}</span>
+                  <span className={`w-1.5 h-1.5 rounded-full ${device.status === "active" ? "bg-emerald-500 animate-pulse" : "bg-red-500"}`} />
+                  <span>{device.status}</span>
                 </span>
               </div>
 
-              {/* Map Preview */}
+              {/* Map Component */}
               {device.lastLocation ? (
                 <DeviceMap
                   latitude={device.lastLocation.latitude}
                   longitude={device.lastLocation.longitude}
                   capturedAt={device.lastLocation.capturedAt}
                   batteryPct={device.lastLocation.batteryPct}
+                  darkMode={darkMode}
                 />
               ) : (
-                <div className="my-4 p-4 bg-neutral-950/60 border border-neutral-800/80 rounded-xl text-xs text-neutral-400 flex items-center gap-2.5">
+                <div className={`my-4 p-4 border rounded-lg text-xs font-mono text-neutral-400 flex items-center gap-2.5 ${darkMode ? "bg-neutral-950/60 border-neutral-800" : "bg-stone-100 border-stone-200"}`}>
                   <svg className="w-4 h-4 text-neutral-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>No location reported yet. Click <strong>Locate</strong> below to ping device GPS position.</span>
+                  <span>GPS location payload pending. Click <strong>LOCATE</strong> to transmit ping request.</span>
                 </div>
               )}
 
-              {/* Action Commands Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-5 pt-4 border-t border-neutral-800/80">
+              {/* Action Commands Toolbar */}
+              <div className={`grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-5 pt-4 border-t ${darkMode ? "border-neutral-800" : "border-stone-200"}`}>
                 {/* Locate */}
                 <button
                   onClick={() => issueCommand(device.id, "locate")}
                   disabled={pendingCommand === `${device.id}:locate`}
-                  className="inline-flex items-center justify-center gap-2 text-xs font-semibold px-3 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 border border-neutral-700/80 text-white transition-all disabled:opacity-50 active:scale-[0.98]"
+                  className={`inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-3 py-2.5 rounded-lg border transition-all active:translate-y-0.5 disabled:opacity-50 ${darkMode ? "bg-neutral-800 hover:bg-neutral-700 border-neutral-700 text-white" : "bg-stone-100 hover:bg-stone-200 border-stone-300 text-stone-900"}`}
                 >
-                  <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>{pendingCommand === `${device.id}:locate` ? "Sending..." : "Locate"}</span>
+                  <span>{pendingCommand === `${device.id}:locate` ? "SENDING..." : "LOCATE"}</span>
                 </button>
 
-                {/* Alarm */}
+                {/* Sound Alarm */}
                 <button
                   onClick={() => issueCommand(device.id, "alarm")}
                   disabled={pendingCommand === `${device.id}:alarm`}
-                  className="inline-flex items-center justify-center gap-2 text-xs font-semibold px-3 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 border border-neutral-700/80 text-white transition-all disabled:opacity-50 active:scale-[0.98]"
+                  className={`inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-3 py-2.5 rounded-lg border transition-all active:translate-y-0.5 disabled:opacity-50 ${darkMode ? "bg-neutral-800 hover:bg-neutral-700 border-neutral-700 text-white" : "bg-stone-100 hover:bg-stone-200 border-stone-300 text-stone-900"}`}
                 >
-                  <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
-                  <span>{pendingCommand === `${device.id}:alarm` ? "Sending..." : "Sound Alarm"}</span>
+                  <span>{pendingCommand === `${device.id}:alarm` ? "SENDING..." : "ALARM"}</span>
                 </button>
 
                 {/* Lock */}
                 <button
                   onClick={() => issueCommand(device.id, "lock")}
                   disabled={pendingCommand === `${device.id}:lock`}
-                  className="inline-flex items-center justify-center gap-2 text-xs font-semibold px-3 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 border border-neutral-700/80 text-white transition-all disabled:opacity-50 active:scale-[0.98]"
+                  className={`inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-3 py-2.5 rounded-lg border transition-all active:translate-y-0.5 disabled:opacity-50 ${darkMode ? "bg-neutral-800 hover:bg-neutral-700 border-neutral-700 text-white" : "bg-stone-100 hover:bg-stone-200 border-stone-300 text-stone-900"}`}
                 >
-                  <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
-                  <span>{pendingCommand === `${device.id}:lock` ? "Sending..." : "Lock"}</span>
+                  <span>{pendingCommand === `${device.id}:lock` ? "SENDING..." : "LOCK"}</span>
                 </button>
 
-                {/* Wipe */}
+                {/* Erase Device */}
                 <button
                   onClick={() => issueCommand(device.id, "wipe")}
                   disabled={pendingCommand === `${device.id}:wipe`}
-                  className="inline-flex items-center justify-center gap-2 text-xs font-semibold px-3 py-2.5 rounded-xl bg-red-950/80 hover:bg-red-900 border border-red-800/80 text-red-200 transition-all disabled:opacity-50 active:scale-[0.98]"
+                  className="inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-3 py-2.5 rounded-lg border bg-red-500/10 hover:bg-red-500/20 border-red-500/40 text-red-500 transition-all active:translate-y-0.5 disabled:opacity-50"
                 >
-                  <svg className="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
-                  <span>{pendingCommand === `${device.id}:wipe` ? "Sending..." : "Erase Device"}</span>
+                  <span>{pendingCommand === `${device.id}:wipe` ? "SENDING..." : "ERASE"}</span>
                 </button>
               </div>
             </div>
