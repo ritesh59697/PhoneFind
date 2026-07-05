@@ -47,8 +47,8 @@ const CommandSchema = new Schema({
   executedAt: { type: String, default: null }
 });
 
-export val UserModel = models.User || model("User", UserSchema);
-export val DeviceModel = models.Device || model("Device", DeviceSchema);
-export val LocationPingModel = models.LocationPing || model("LocationPing", LocationPingSchema);
-export val EventModel = models.Event || model("Event", EventSchema);
-export val CommandModel = models.Command || model("Command", CommandSchema);
+export const UserModel = models.User || model("User", UserSchema);
+export const DeviceModel = models.Device || model("Device", DeviceSchema);
+export const LocationPingModel = models.LocationPing || model("LocationPing", LocationPingSchema);
+export const EventModel = models.Event || model("Event", EventSchema);
+export const CommandModel = models.Command || model("Command", CommandSchema);
