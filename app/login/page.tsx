@@ -48,52 +48,64 @@ export default function LoginPage() {
   }
 
   return (
-    <div className={`min-h-screen transition-colors flex items-center justify-center p-6 font-sans ${darkMode ? "bg-neutral-950 text-neutral-100 selection:bg-emerald-500 selection:text-white" : "bg-stone-50 text-stone-900 selection:bg-stone-900 selection:text-white"}`}>
+    <div className={`min-h-screen font-sans transition-colors flex items-center justify-center p-6 ${darkMode ? "bg-neutral-950 text-neutral-100 selection:bg-emerald-500 selection:text-white" : "bg-stone-100 text-neutral-900 selection:bg-neutral-900 selection:text-white"}`}>
       <div className="w-full max-w-md">
-        {/* Top bar with theme toggle */}
+        {/* Top Header Console Bar */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl border flex items-center justify-center p-2 ${darkMode ? "bg-neutral-900 border-neutral-800" : "bg-white border-stone-300 shadow-sm"}`}>
+            <div className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center p-2.5 transition-all ${
+              darkMode
+                ? "bg-neutral-900 border-neutral-700 shadow-[3px_3px_0px_0px_rgba(255,255,255,0.1)]"
+                : "bg-white border-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
+            }`}>
               <img src="/favicon.svg" alt="PhoneFind Logo" className="w-full h-full object-contain" />
             </div>
             <div>
-              <h1 className="text-base font-mono font-bold tracking-tight uppercase">PHONEFIND</h1>
-              <p className="text-[10px] font-mono text-neutral-500">HARDWARE SECURITY PORTAL</p>
+              <h1 className="text-lg font-mono font-bold tracking-tight uppercase">PHONEFIND</h1>
+              <p className="text-[11px] font-mono text-neutral-500">HARDWARE SECURITY PORTAL</p>
             </div>
           </div>
 
           <button
             onClick={toggleTheme}
             title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            className={`p-2.5 rounded-lg border transition-all ${darkMode ? "bg-neutral-900 hover:bg-neutral-800 border-neutral-800 text-amber-400" : "bg-white hover:bg-stone-100 border-stone-300 text-stone-700 shadow-sm"}`}
+            className={`p-2.5 rounded-lg border-2 font-mono font-bold text-xs transition-all active:translate-x-[1px] active:translate-y-[1px] ${
+              darkMode
+                ? "bg-neutral-900 hover:bg-neutral-800 border-neutral-700 text-amber-400 shadow-[3px_3px_0px_0px_rgba(255,255,255,0.08)]"
+                : "bg-white hover:bg-stone-200 border-neutral-900 text-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
+            }`}
           >
             {darkMode ? (
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             ) : (
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             )}
           </button>
         </div>
 
-        {/* Minimalist Brutalist Form Card */}
-        <div className={`border rounded-xl p-6 md:p-8 transition-colors ${darkMode ? "bg-neutral-900/70 border-neutral-800" : "bg-white border-stone-300 shadow-sm"}`}>
+        {/* Neo-Brutalist Authentication Card */}
+        <div className={`border-2 rounded-xl p-6 md:p-8 transition-all ${
+          darkMode
+            ? "bg-neutral-900 border-neutral-700 shadow-[6px_6px_0px_0px_rgba(255,255,255,0.08)]"
+            : "bg-white border-neutral-900 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+        }`}>
           {/* Mode Switcher Tabs */}
-          <div className={`grid grid-cols-2 p-1 border rounded-lg mb-6 ${darkMode ? "bg-neutral-950 border-neutral-800" : "bg-stone-100 border-stone-200"}`}>
+          <div className={`grid grid-cols-2 p-1 border-2 rounded-lg mb-6 ${darkMode ? "bg-neutral-950 border-neutral-800" : "bg-stone-100 border-neutral-900"}`}>
             <button
               type="button"
               onClick={() => {
                 setMode("login");
                 setError(null);
               }}
-              className={`text-xs font-mono font-bold uppercase tracking-wider py-2.5 rounded-md transition-all ${
+              className={`text-xs font-mono font-bold uppercase tracking-wider py-2.5 rounded transition-all ${
                 mode === "login"
                   ? darkMode
-                    ? "bg-neutral-800 text-white shadow-sm"
-                    : "bg-white text-stone-900 shadow-sm"
+                    ? "bg-neutral-800 text-white border-2 border-neutral-600 shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
+                    : "bg-white text-neutral-900 border-2 border-neutral-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                   : "text-neutral-500 hover:text-neutral-300"
               }`}
             >
@@ -105,11 +117,11 @@ export default function LoginPage() {
                 setMode("signup");
                 setError(null);
               }}
-              className={`text-xs font-mono font-bold uppercase tracking-wider py-2.5 rounded-md transition-all ${
+              className={`text-xs font-mono font-bold uppercase tracking-wider py-2.5 rounded transition-all ${
                 mode === "signup"
                   ? darkMode
-                    ? "bg-neutral-800 text-white shadow-sm"
-                    : "bg-white text-stone-900 shadow-sm"
+                    ? "bg-neutral-800 text-white border-2 border-neutral-600 shadow-[2px_2px_0px_0px_rgba(255,255,255,0.1)]"
+                    : "bg-white text-neutral-900 border-2 border-neutral-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                   : "text-neutral-500 hover:text-neutral-300"
               }`}
             >
@@ -118,8 +130,8 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="mb-5 p-3.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-mono flex items-center gap-2.5">
-              <svg className="w-4 h-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="mb-5 p-3.5 rounded-lg border-2 border-red-500 bg-red-500/10 text-red-500 text-xs font-mono font-bold flex items-center gap-2.5">
+              <svg className="w-4 h-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>{error}</span>
@@ -135,10 +147,10 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className={`w-full border rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none transition-colors ${
+                className={`w-full border-2 rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none transition-colors ${
                   darkMode
                     ? "bg-neutral-950 border-neutral-800 text-white focus:border-emerald-500 placeholder-neutral-600"
-                    : "bg-stone-50 border-stone-300 text-stone-900 focus:border-stone-900 placeholder-stone-400"
+                    : "bg-stone-50 border-neutral-900 text-neutral-900 focus:border-emerald-600 placeholder-neutral-400"
                 }`}
               />
             </div>
@@ -152,14 +164,14 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={8}
-                className={`w-full border rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none transition-colors ${
+                className={`w-full border-2 rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none transition-colors ${
                   darkMode
                     ? "bg-neutral-950 border-neutral-800 text-white focus:border-emerald-500 placeholder-neutral-600"
-                    : "bg-stone-50 border-stone-300 text-stone-900 focus:border-stone-900 placeholder-stone-400"
+                    : "bg-stone-50 border-neutral-900 text-neutral-900 focus:border-emerald-600 placeholder-neutral-400"
                 }`}
               />
               {mode === "signup" && (
-                <p className="text-[10px] font-mono text-neutral-500 mt-1">MINIMUM 8 CHARACTERS REQUIRED</p>
+                <p className="text-[10px] font-mono font-bold text-neutral-500 mt-1">MINIMUM 8 CHARACTERS REQUIRED</p>
               )}
             </div>
 
@@ -171,10 +183,10 @@ export default function LoginPage() {
                   placeholder="trusted@domain.com"
                   value={backupContact}
                   onChange={(e) => setBackupContact(e.target.value)}
-                  className={`w-full border rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none transition-colors ${
+                  className={`w-full border-2 rounded-lg px-3.5 py-2.5 text-xs font-mono focus:outline-none transition-colors ${
                     darkMode
                       ? "bg-neutral-950 border-neutral-800 text-white focus:border-emerald-500 placeholder-neutral-600"
-                      : "bg-stone-50 border-stone-300 text-stone-900 focus:border-stone-900 placeholder-stone-400"
+                      : "bg-stone-50 border-neutral-900 text-neutral-900 focus:border-emerald-600 placeholder-neutral-400"
                   }`}
                 />
               </div>
@@ -183,11 +195,11 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-4 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-all disabled:opacity-50 active:translate-y-0.5"
+              className="w-full mt-2 inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-4 py-3.5 rounded-lg border-2 border-emerald-500 bg-emerald-600 hover:bg-emerald-500 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50"
             >
               {loading ? (
                 <>
-                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   <span>PROCESSING...</span>
                 </>
               ) : (
@@ -198,8 +210,8 @@ export default function LoginPage() {
         </div>
 
         {/* Footer Note */}
-        <p className="text-center text-[11px] font-mono text-neutral-500 mt-6 flex items-center justify-center gap-1.5">
-          <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <p className="text-center text-[11px] font-mono font-bold text-neutral-500 mt-6 flex items-center justify-center gap-1.5">
+          <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
           <span>HARDWARE-ENCRYPTED HARDWARE SECURITY</span>
