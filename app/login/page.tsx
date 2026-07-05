@@ -36,7 +36,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-sm">
-        <h1 className="text-xl font-medium mb-1">PhoneFind</h1>
+        <div className="flex items-center gap-3 mb-2">
+          <img src="/logo.png" alt="PhoneFind Logo" className="w-10 h-10 rounded-lg" />
+          <h1 className="text-2xl font-bold">PhoneFind</h1>
+        </div>
         <p className="text-sm text-neutral-500 mb-6">
           {mode === "login" ? "Log in to your account" : "Create your account"}
         </p>
