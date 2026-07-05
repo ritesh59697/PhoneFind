@@ -1,9 +1,13 @@
+import fs from "fs";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 import path from "path";
 import { DbSchema } from "./types";
 
-const file = path.join(process.cwd(), "data", "db.json");
+const isVercel = process.env.VERCEL || process.env.NODE_ENV === "production";
+const file = isVercel
+  ? path.join("/tmp", "db.json")
+  : path.join(process.cwd(), "data", "db.json");
 
 const defaultData: DbSchema = {
   users: [],
@@ -13,14 +17,25 @@ const defaultData: DbSchema = {
   commands: [],
 };
 
-// A single shared instance across API routes (dev-mode friendly with globalThis
-// to survive Next.js hot-reload without reopening the file repeatedly).
 declare global {
   // eslint-disable-next-line no-var
   var __phonefind_db__: Low<DbSchema> | undefined;
 }
 
 async function createDb() {
+  if (isVercel && !fs.existsSync(file)) {
+    const seedFile = path.join(process.cwd(), "data", "db.json");
+    if (fs.existsSync(seedFile)) {
+      try {
+        fs.copyFileSync(seedFile, file);
+      } catch {
+        fs.writeFileSync(file, JSON.stringify(defaultData));
+      }
+    } else {
+      fs.writeFileSync(file, JSON.stringify(defaultData));
+    }
+  }
+
   const adapter = new JSONFile<DbSchema>(file);
   const db = new Low<DbSchema>(adapter, defaultData);
   await db.read();
@@ -37,10 +52,3 @@ export async function getDb() {
   }
   return global.__phonefind_db__;
 }
-
-/**
- * NOTE for production: this JSON-file store is only meant for local
- * development and testing. Swap this module for a real database
- * (Postgres via Prisma, or similar) before going live — a JSON file
- * cannot safely handle concurrent writes at scale.
- */
