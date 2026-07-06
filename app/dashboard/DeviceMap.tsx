@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface DeviceMapProps {
   latitude: number;
@@ -13,7 +13,15 @@ interface DeviceMapProps {
 export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct, darkMode = true }: DeviceMapProps) {
   const [address, setAddress] = useState<string | null>(null);
   const [loadingAddress, setLoadingAddress] = useState(false);
-  const [mapType, setMapType] = useState<"roadmap" | "satellite">("roadmap");
+  const [mapMode, setMapMode] = useState<"street" | "satellite">("street");
+
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mapInstanceRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const markerRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tileLayerRef = useRef<any>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -42,13 +50,94 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
     };
   }, [latitude, longitude]);
 
+  // Initialize Interactive Direct-Zoom Leaflet Map
+  useEffect(() => {
+    if (typeof window === "undefined" || !mapContainerRef.current) return;
+
+    let isMounted = true;
+
+    // Load Leaflet CSS
+    if (!document.getElementById("leaflet-css")) {
+      const link = document.createElement("link");
+      link.id = "leaflet-css";
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      document.head.appendChild(link);
+    }
+
+    import("leaflet").then((L) => {
+      if (!isMounted || !mapContainerRef.current) return;
+
+      if (!mapInstanceRef.current) {
+        const map = L.map(mapContainerRef.current, {
+          center: [latitude, longitude],
+          zoom: 16,
+          zoomControl: false,
+          scrollWheelZoom: true, // Direct mouse wheel zoom without any shortcut keys required!
+          doubleClickZoom: true,
+          dragging: true,
+          touchZoom: true,
+          attributionControl: false,
+        });
+
+        // Add Zoom Control at Top Left (+ / - buttons)
+        L.control.zoom({ position: "topleft" }).addTo(map);
+
+        mapInstanceRef.current = map;
+      } else {
+        mapInstanceRef.current.setView([latitude, longitude], 16);
+      }
+
+      const map = mapInstanceRef.current;
+
+      // Swap Tile Layer based on mode
+      if (tileLayerRef.current) {
+        map.removeLayer(tileLayerRef.current);
+      }
+
+      if (mapMode === "satellite") {
+        // Esri World Imagery High-Res Satellite Aerial Tiles
+        tileLayerRef.current = L.tileLayer(
+          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+          { maxZoom: 19 }
+        ).addTo(map);
+      } else {
+        // High-Quality Smooth Vector Street Map
+        tileLayerRef.current = L.tileLayer(
+          darkMode
+            ? "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            : "https://{s}.tile.openstreetmap.org/{z}/{y}/{x}.png",
+          { maxZoom: 19 }
+        ).addTo(map);
+      }
+
+      // Custom Electric Emerald Pulsing Target Pin Icon
+      const customIcon = L.divIcon({
+        className: "custom-radar-pin",
+        html: `
+          <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; width: 40px; height: 40px; background-color: rgba(16, 185, 129, 0.45); border-radius: 50%; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+            <div style="width: 22px; height: 22px; background-color: #10b981; border: 3.5px solid #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); z-index: 10;"></div>
+          </div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+
+      if (markerRef.current) {
+        markerRef.current.setLatLng([latitude, longitude]);
+      } else {
+        markerRef.current = L.marker([latitude, longitude], { icon: customIcon }).addTo(map);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [latitude, longitude, mapMode, darkMode]);
+
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
   const appleMapsUrl = `https://maps.apple.com/?q=${latitude},${longitude}`;
-
-  // Google Maps Native Embed URL (Find My Device style)
-  // t=m for Roadmap, t=k for Satellite, t=h for Hybrid Satellite + Roads
-  const embedMapType = mapType === "satellite" ? "h" : "m";
-  const googleEmbedUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&t=${embedMapType}&z=16&output=embed`;
 
   return (
     <div className={`mt-4 border-[2.5px] rounded-2xl overflow-hidden transition-all ${
@@ -56,24 +145,16 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
         ? "border-neutral-700 bg-[#111622] shadow-[4px_4px_0px_0px_rgba(255,255,255,0.08)] text-neutral-100"
         : "border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-neutral-900"
     }`}>
-      {/* Interactive Google Maps Frame (Find My Device Style) */}
+      {/* Interactive Map Canvas with Direct Mouse Wheel & Gesture Zooming */}
       <div className="relative w-full h-72 border-b-[2.5px] border-black bg-stone-100">
-        <iframe
-          title="Google Find My Device Map"
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          scrolling="no"
-          src={googleEmbedUrl}
-          className={`w-full h-full filter ${darkMode ? "contrast-[1.05] brightness-[0.95]" : "contrast-[1]"}`}
-        />
+        <div ref={mapContainerRef} className="w-full h-full z-0 cursor-grab active:cursor-grabbing" />
 
-        {/* Map Type Mode Switcher (Google Roadmap vs Google Satellite) */}
+        {/* Map Type Mode Switcher (Street Vector vs High-Res Satellite) */}
         <div className="absolute top-3 right-3 z-10 flex items-center p-1 rounded-xl border-[2px] border-black bg-white/95 backdrop-blur shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] font-mono text-xs">
           <button
-            onClick={() => setMapType("roadmap")}
+            onClick={() => setMapMode("street")}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-black transition-all ${
-              mapType === "roadmap"
+              mapMode === "street"
                 ? "bg-black text-white"
                 : "text-neutral-700 hover:text-black"
             }`}
@@ -84,9 +165,9 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
             <span>MAP</span>
           </button>
           <button
-            onClick={() => setMapType("satellite")}
+            onClick={() => setMapMode("satellite")}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-black transition-all ${
-              mapType === "satellite"
+              mapMode === "satellite"
                 ? "bg-black text-white"
                 : "text-neutral-700 hover:text-black"
             }`}
