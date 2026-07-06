@@ -157,14 +157,14 @@ export default function LoginPage() {
                 <label className="block text-[11px] font-mono font-black uppercase tracking-wider text-neutral-400 mb-1.5">EMAIL ADDRESS</label>
                 <input
                   type="email"
-                  placeholder="name@domain.com"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className={`w-full border-[2px] rounded-xl px-4 py-3 text-xs font-mono focus:outline-none transition-colors ${
                     darkMode
-                      ? "bg-[#090D12] border-neutral-700 text-white focus:border-emerald-500 placeholder-neutral-600"
-                      : "bg-[#F9F9F7] border-black text-neutral-900 focus:border-emerald-600 placeholder-neutral-400"
+                      ? "bg-[#090D12] border-neutral-700 text-white focus:border-emerald-500 placeholder:text-neutral-600/70"
+                      : "bg-[#F9F9F7] border-black text-neutral-900 focus:border-emerald-600 placeholder:text-neutral-400/60"
                   }`}
                 />
               </div>
@@ -173,15 +173,15 @@ export default function LoginPage() {
                 <label className="block text-[11px] font-mono font-black uppercase tracking-wider text-neutral-400 mb-1.5">PASSWORD</label>
                 <input
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={8}
                   className={`w-full border-[2px] rounded-xl px-4 py-3 text-xs font-mono focus:outline-none transition-colors ${
                     darkMode
-                      ? "bg-[#090D12] border-neutral-700 text-white focus:border-emerald-500 placeholder-neutral-600"
-                      : "bg-[#F9F9F7] border-black text-neutral-900 focus:border-emerald-600 placeholder-neutral-400"
+                      ? "bg-[#090D12] border-neutral-700 text-white focus:border-emerald-500 placeholder:text-neutral-600/70"
+                      : "bg-[#F9F9F7] border-black text-neutral-900 focus:border-emerald-600 placeholder:text-neutral-400/60"
                   }`}
                 />
                 {mode === "signup" && (
@@ -194,13 +194,13 @@ export default function LoginPage() {
                   <label className="block text-[11px] font-mono font-black uppercase tracking-wider text-neutral-400 mb-1.5">BACKUP EMAIL (OPTIONAL)</label>
                   <input
                     type="email"
-                    placeholder="trusted@domain.com"
+                    placeholder="Enter backup email"
                     value={backupContact}
                     onChange={(e) => setBackupContact(e.target.value)}
                     className={`w-full border-[2px] rounded-xl px-4 py-3 text-xs font-mono focus:outline-none transition-colors ${
                       darkMode
-                        ? "bg-[#090D12] border-neutral-700 text-white focus:border-emerald-500 placeholder-neutral-600"
-                        : "bg-[#F9F9F7] border-black text-neutral-900 focus:border-emerald-600 placeholder-neutral-400"
+                        ? "bg-[#090D12] border-neutral-700 text-white focus:border-emerald-500 placeholder:text-neutral-600/70"
+                        : "bg-[#F9F9F7] border-black text-neutral-900 focus:border-emerald-600 placeholder:text-neutral-400/60"
                     }`}
                   />
                 </div>
