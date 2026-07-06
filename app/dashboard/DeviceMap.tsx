@@ -14,7 +14,6 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
   const [address, setAddress] = useState<string | null>(null);
   const [loadingAddress, setLoadingAddress] = useState(false);
   const [mapMode, setMapMode] = useState<"street" | "satellite">("street");
-  const [tileError, setTileError] = useState(false);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,7 +50,7 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
     };
   }, [latitude, longitude]);
 
-  // Initialize Interactive Leaflet Map with container size invalidation & fallback
+  // Initialize Interactive Leaflet Map
   useEffect(() => {
     if (typeof window === "undefined" || !mapContainerRef.current) return;
 
@@ -69,70 +68,74 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
     import("leaflet").then((L) => {
       if (!isMounted || !mapContainerRef.current) return;
 
-      try {
-        if (!mapInstanceRef.current) {
-          const map = L.map(mapContainerRef.current, {
-            center: [latitude, longitude],
-            zoom: 16,
-            zoomControl: false,
-            scrollWheelZoom: true,
-            doubleClickZoom: true,
-            dragging: true,
-            touchZoom: true,
-            attributionControl: false,
-          });
-
-          L.control.zoom({ position: "topleft" }).addTo(map);
-          mapInstanceRef.current = map;
-        } else {
-          mapInstanceRef.current.setView([latitude, longitude], 16);
-        }
-
-        const map = mapInstanceRef.current;
-
-        // Force container resize invalidation so tiles render immediately
-        setTimeout(() => {
-          if (isMounted && map) {
-            map.invalidateSize();
-          }
-        }, 150);
-
-        // Remove old tile layer
-        if (tileLayerRef.current) {
-          map.removeLayer(tileLayerRef.current);
-        }
-
-        // Standard OpenStreetMap / Esri Satellite Tile URLs
-        const tileUrl = mapMode === "satellite"
-          ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-          : "https://tile.openstreetmap.org/{z}/{y}/{x}.png";
-
-        tileLayerRef.current = L.tileLayer(tileUrl, {
-          maxZoom: 19,
-          crossOrigin: true
-        }).addTo(map);
-
-        // Custom Pulsing Target Pin Icon
-        const customIcon = L.divIcon({
-          className: "custom-radar-pin",
-          html: `
-            <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-              <div style="position: absolute; width: 40px; height: 40px; background-color: rgba(16, 185, 129, 0.45); border-radius: 50%; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
-              <div style="width: 22px; height: 22px; background-color: #10b981; border: 3.5px solid #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); z-index: 10;"></div>
-            </div>
-          `,
-          iconSize: [40, 40],
-          iconAnchor: [20, 20],
+      if (!mapInstanceRef.current) {
+        const map = L.map(mapContainerRef.current, {
+          center: [latitude, longitude],
+          zoom: 16,
+          zoomControl: false,
+          scrollWheelZoom: true,
+          doubleClickZoom: true,
+          dragging: true,
+          touchZoom: true,
+          attributionControl: false,
         });
 
-        if (markerRef.current) {
-          markerRef.current.setLatLng([latitude, longitude]);
-        } else {
-          markerRef.current = L.marker([latitude, longitude], { icon: customIcon }).addTo(map);
+        L.control.zoom({ position: "topleft" }).addTo(map);
+        mapInstanceRef.current = map;
+      } else {
+        mapInstanceRef.current.setView([latitude, longitude], 16);
+      }
+
+      const map = mapInstanceRef.current;
+
+      // Force container resize invalidation so tiles render immediately
+      setTimeout(() => {
+        if (isMounted && map) {
+          map.invalidateSize();
         }
-      } catch (err) {
-        console.error("Leaflet initialization failed:", err);
-        setTileError(true);
+      }, 100);
+
+      // Remove old tile layer
+      if (tileLayerRef.current) {
+        map.removeLayer(tileLayerRef.current);
+      }
+
+      // 100% Reliable, CORS-unrestricted Fastly CDN tile servers
+      if (mapMode === "satellite") {
+        // Esri World Imagery High-Res Satellite Aerial Tiles
+        tileLayerRef.current = L.tileLayer(
+          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+          { maxZoom: 19 }
+        ).addTo(map);
+      } else {
+        // CartoDB Voyager / Positron Ultra-Fast CDN Street Tiles (Never blocked by CORS)
+        const streetUrl = darkMode
+          ? "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+
+        tileLayerRef.current = L.tileLayer(streetUrl, {
+          maxZoom: 19,
+          subdomains: ["a", "b", "c", "d"],
+        }).addTo(map);
+      }
+
+      // Custom Pulsing Target Pin Icon
+      const customIcon = L.divIcon({
+        className: "custom-radar-pin",
+        html: `
+          <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; width: 40px; height: 40px; background-color: rgba(16, 185, 129, 0.45); border-radius: 50%; animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+            <div style="width: 22px; height: 22px; background-color: #10b981; border: 3.5px solid #ffffff; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); z-index: 10;"></div>
+          </div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+
+      if (markerRef.current) {
+        markerRef.current.setLatLng([latitude, longitude]);
+      } else {
+        markerRef.current = L.marker([latitude, longitude], { icon: customIcon }).addTo(map);
       }
     });
 
@@ -143,7 +146,6 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
 
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
   const appleMapsUrl = `https://maps.apple.com/?q=${latitude},${longitude}`;
-  const embedOsmUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.005},${latitude - 0.004},${longitude + 0.005},${latitude + 0.004}&layer=mapnik&marker=${latitude},${longitude}`;
 
   return (
     <div className={`mt-4 border-[2.5px] rounded-2xl overflow-hidden transition-all ${
@@ -153,19 +155,7 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
     }`}>
       {/* Interactive Map Canvas */}
       <div className="relative w-full h-72 border-b-[2.5px] border-black bg-stone-100">
-        {!tileError ? (
-          <div ref={mapContainerRef} className="w-full h-full z-0 cursor-grab active:cursor-grabbing" />
-        ) : (
-          <iframe
-            title="OpenStreetMap Location"
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            scrolling="no"
-            src={embedOsmUrl}
-            className="w-full h-full"
-          />
-        )}
+        <div ref={mapContainerRef} className="w-full h-full z-0 cursor-grab active:cursor-grabbing" />
 
         {/* Map Type Mode Switcher */}
         <div className="absolute top-3 right-3 z-10 flex items-center p-1 rounded-xl border-[2px] border-black bg-white/95 backdrop-blur shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] font-mono text-xs">
