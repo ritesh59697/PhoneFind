@@ -102,15 +102,13 @@ export default function DashboardPage() {
         {/* Top Header Navigation */}
         <header className={`flex items-center justify-between pb-6 mb-8 border-b-[2.5px] ${darkMode ? "border-neutral-800" : "border-neutral-900"}`}>
           <div className="flex items-center gap-4">
-            {/* Prominent Large Logo Box with Hard Offset Shadow */}
+            {/* Seamless White Logo Badge in both Light & Dark Mode */}
             <div className="relative">
               <div className={`absolute inset-0 translate-x-[4px] translate-y-[4px] rounded-2xl ${
-                darkMode ? "bg-neutral-700" : "bg-black"
+                darkMode ? "bg-neutral-800" : "bg-black"
               }`} />
-              <div className={`relative w-16 h-16 rounded-2xl border-[2.5px] flex items-center justify-center p-2.5 transition-all ${
-                darkMode ? "bg-[#111622] border-neutral-600" : "bg-white border-black"
-              }`}>
-                <img src="/logo.png" alt="PhoneFind Official Logo" className="w-full h-full object-contain" />
+              <div className="relative w-16 h-16 rounded-2xl border-[2.5px] border-black bg-white flex items-center justify-center p-2.5 transition-all overflow-hidden">
+                <img src="/logo.png" alt="PhoneFind Official Logo" className="w-full h-full object-contain rounded-lg" />
               </div>
             </div>
             <div>
@@ -120,7 +118,7 @@ export default function DashboardPage() {
                   NEO-SYSTEM v1.0
                 </span>
               </div>
-              <p className="text-xs font-mono font-bold text-neutral-500 tracking-wider">HARDWARE MONITORING & TELEMETRY</p>
+              <p className="text-xs font-mono font-bold text-neutral-400 tracking-wider">HARDWARE MONITORING & TELEMETRY</p>
             </div>
           </div>
 

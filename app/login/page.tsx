@@ -57,20 +57,18 @@ export default function LoginPage() {
         {/* Top Header Console Bar */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            {/* Prominent Large Logo Box with Hard Offset Shadow */}
+            {/* Seamless White Logo Badge in both Light & Dark Mode */}
             <div className="relative">
               <div className={`absolute inset-0 translate-x-[4px] translate-y-[4px] rounded-2xl ${
-                darkMode ? "bg-neutral-700" : "bg-black"
+                darkMode ? "bg-neutral-800" : "bg-black"
               }`} />
-              <div className={`relative w-16 h-16 rounded-2xl border-[2.5px] flex items-center justify-center p-2.5 transition-all ${
-                darkMode ? "bg-[#111622] border-neutral-600" : "bg-white border-black"
-              }`}>
-                <img src="/logo.png" alt="PhoneFind Official Logo" className="w-full h-full object-contain" />
+              <div className="relative w-16 h-16 rounded-2xl border-[2.5px] border-black bg-white flex items-center justify-center p-2.5 transition-all overflow-hidden">
+                <img src="/logo.png" alt="PhoneFind Official Logo" className="w-full h-full object-contain rounded-lg" />
               </div>
             </div>
             <div>
               <h1 className="text-2xl font-mono font-black tracking-tight">PhoneFind</h1>
-              <p className="text-[11px] font-mono font-bold text-neutral-500 tracking-wider">HARDWARE SECURITY PORTAL</p>
+              <p className="text-[11px] font-mono font-bold text-neutral-400 tracking-wider">HARDWARE SECURITY PORTAL</p>
             </div>
           </div>
 
@@ -208,7 +206,7 @@ export default function LoginPage() {
                 </div>
               )}
 
-              {/* Neo-Brutalist Submit Action Button */}
+              {/* Action Button */}
               <div className="relative mt-2">
                 {isFormValid && (
                   <div className={`absolute inset-0 translate-x-[4px] translate-y-[4px] rounded-xl ${
