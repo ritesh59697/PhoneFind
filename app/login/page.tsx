@@ -157,7 +157,7 @@ export default function LoginPage() {
                 <label className="block text-[11px] font-mono font-black uppercase tracking-wider text-neutral-400 mb-1.5">EMAIL ADDRESS</label>
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="name@domain.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -173,7 +173,7 @@ export default function LoginPage() {
                 <label className="block text-[11px] font-mono font-black uppercase tracking-wider text-neutral-400 mb-1.5">PASSWORD</label>
                 <input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -194,7 +194,7 @@ export default function LoginPage() {
                   <label className="block text-[11px] font-mono font-black uppercase tracking-wider text-neutral-400 mb-1.5">BACKUP EMAIL (OPTIONAL)</label>
                   <input
                     type="email"
-                    placeholder="Enter backup email"
+                    placeholder="trusted@domain.com"
                     value={backupContact}
                     onChange={(e) => setBackupContact(e.target.value)}
                     className={`w-full border-[2px] rounded-xl px-4 py-3 text-xs font-mono focus:outline-none transition-colors ${
