@@ -62,25 +62,27 @@ export default function DeviceMap({ latitude, longitude, capturedAt, batteryPct,
           src={embedUrl}
           className={`w-full h-full filter ${darkMode ? "saturate-[0.85] contrast-[1.1] invert-[0.88] hue-rotate-180" : "saturate-[1]"}`}
         />
-        {batteryPct !== null && (
-          <div className={`absolute top-3 right-3 text-xs px-3 py-1.5 rounded-lg border-2 font-mono font-bold flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${
-            darkMode ? "bg-neutral-900 text-white border-white" : "bg-white text-neutral-900 border-neutral-900"
-          }`}>
-            <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h11M3 14h11m-8-7h6a2 2 0 012 2v8a2 2 0 01-2 2H9a2 2 0 01-2-2V9a2 2 0 012-2zm13 4h1a1 1 0 011 1v2a1 1 0 01-1 1h-1v-4z" />
-            </svg>
-            <span>{batteryPct}% BATTERY</span>
-          </div>
-        )}
       </div>
 
       {/* Location Metadata Block */}
       <div className="p-4 space-y-3 font-mono">
         <div className="flex items-start justify-between gap-3">
-          <div>
-            <div className="flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-emerald-500 mb-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-              GPS REAL-TIME VECTOR
+          <div className="w-full">
+            <div className="flex items-center justify-between gap-3 mb-1">
+              <div className="flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-emerald-500">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                GPS REAL-TIME VECTOR
+              </div>
+              {batteryPct !== null && (
+                <div className={`text-[11px] px-2.5 py-1 rounded-md border-2 font-mono font-bold flex items-center gap-1.5 ${
+                  darkMode ? "bg-neutral-950 text-emerald-400 border-neutral-700" : "bg-stone-100 text-emerald-700 border-neutral-900"
+                }`}>
+                  <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h11M3 14h11m-8-7h6a2 2 0 012 2v8a2 2 0 01-2 2H9a2 2 0 01-2-2V9a2 2 0 012-2zm13 4h1a1 1 0 011 1v2a1 1 0 01-1 1h-1v-4z" />
+                  </svg>
+                  <span>{batteryPct}% BATTERY</span>
+                </div>
+              )}
             </div>
             {address ? (
               <p className={`text-xs font-semibold leading-relaxed ${darkMode ? "text-neutral-200" : "text-neutral-900"}`}>{address}</p>
