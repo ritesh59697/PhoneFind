@@ -1,0 +1,428 @@
+{
+  "users": [
+    {
+      "id": "d795a4ac-9af0-40bd-811f-9241f0ca4f1f",
+      "email": "riteshkumar00969@gmail.com",
+      "passwordHash": "$2b$10$ESzb0.Z//gsh7OEgQ9Yfn.fgbPLR/Z7z2VbTVsdagW1/JQcCidBMy",
+      "backupContact": null,
+      "createdAt": "2026-07-05T07:47:56.415Z"
+    }
+  ],
+  "devices": [
+    {
+      "id": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "userId": "d795a4ac-9af0-40bd-811f-9241f0ca4f1f",
+      "imei": "DEVICE_ID_530956901",
+      "deviceModel": "Google sdk_gphone64_arm64",
+      "fcmToken": "esEZkoTHTBOX8VujVCquef:APA91bEbSTACl-Xai3R5R_7Cgl32BRoVmRbCvIeheb0RSoDxsx6NfOzKeEJMIRJjG3SXOOmDe58YRFn87q85ugS427AmFoHmfxYbamph0XpBFiKHU_R2i8g",
+      "simSerialHash": "3630742797758fa4f2c612edcf1848bb293db23d479fc7ba6190e9c8141cf97f",
+      "lastSeenAt": "2026-07-05T08:11:23.667Z",
+      "status": "active",
+      "createdAt": "2026-07-05T07:52:52.419Z"
+    }
+  ],
+  "locationPings": [
+    {
+      "id": "20647ed4-372d-4d35-807e-b7a62f261620",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:05.902Z"
+    },
+    {
+      "id": "c871de56-8d07-4fb5-b0b8-32b6d72f4982",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:06.145Z"
+    },
+    {
+      "id": "60f872e2-1311-4e90-9034-2e722c3adf5d",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:06.225Z"
+    },
+    {
+      "id": "31107a32-daeb-4bd2-8ce8-f0b202de8647",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:06.668Z"
+    },
+    {
+      "id": "5d624210-ef92-4c96-ae1b-d6b8af850954",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:06.696Z"
+    },
+    {
+      "id": "a1ffb7d2-ce42-437f-9065-aac977c4049a",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:07.238Z"
+    },
+    {
+      "id": "87096a8f-5e4e-4063-90ad-1e2b10adab20",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:08.749Z"
+    },
+    {
+      "id": "ea7a9582-8c3c-4537-97af-f779c0b88da3",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:08.792Z"
+    },
+    {
+      "id": "4c9e46e4-d9d6-4d9f-ab11-9db18ba1605f",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:19.044Z"
+    },
+    {
+      "id": "1211a640-dec1-43fb-a8a6-dc61903dfe0f",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:05:29.534Z"
+    },
+    {
+      "id": "54399e1a-79d4-4aff-bb6d-16ca64189486",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "latitude": 37.4219983,
+      "longitude": -122.084,
+      "batteryPct": 100,
+      "capturedAt": "2026-07-05T08:05:05.223Z",
+      "syncedAt": "2026-07-05T08:11:23.667Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "54650d6e-2082-4707-89b2-15937793ff4f",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T07:56:42.570Z"
+    },
+    {
+      "id": "8f9a6461-80d7-4099-a525-5e037d6a1e1b",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_wipe",
+      "metadata": {},
+      "createdAt": "2026-07-05T07:56:44.133Z"
+    },
+    {
+      "id": "2e53ef99-ec67-40ba-8550-6f5024d77846",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_wipe",
+      "metadata": {},
+      "createdAt": "2026-07-05T07:56:44.736Z"
+    },
+    {
+      "id": "4d452669-7ec1-4745-891d-ab1af1eb99e5",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:00:31.038Z"
+    },
+    {
+      "id": "0bb8af33-e58d-439a-9126-0cad4bfce474",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:00:32.047Z"
+    },
+    {
+      "id": "14dde46e-9ae0-458f-82ac-6ce6e82602c4",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:00:32.476Z"
+    },
+    {
+      "id": "447a3682-ebb4-4fdf-9cff-ca4295ea51e4",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_wipe",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:00:42.483Z"
+    },
+    {
+      "id": "342cae78-7e13-42fb-a822-c065c2153e0f",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:04:27.636Z"
+    },
+    {
+      "id": "33b5d3a4-f996-4b2f-98dd-af5f5946d74d",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:05:22.467Z"
+    },
+    {
+      "id": "013c070a-c816-4ea3-af21-43725eac0085",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_wipe",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:36:17.261Z"
+    },
+    {
+      "id": "048a8115-ba2a-4c9e-98df-128c4c8134eb",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_lock",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:36:20.518Z"
+    },
+    {
+      "id": "2f22fd22-53e2-4825-9337-29d4c1f339b5",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_wipe",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:36:21.381Z"
+    },
+    {
+      "id": "ba2d4b19-c533-4a2e-81ab-138f630688ba",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "command_wipe",
+      "metadata": {},
+      "createdAt": "2026-07-05T08:36:21.559Z"
+    }
+  ],
+  "commands": [
+    {
+      "id": "fe14a8ce-b466-472c-90ec-20364758b02b",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "alarm",
+      "status": "executed",
+      "issuedAt": "2026-07-05T07:55:22.573Z",
+      "executedAt": "2026-07-05T08:05:00.870Z"
+    },
+    {
+      "id": "9547e809-b2da-46e5-b476-37e982fde21e",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T07:56:23.745Z",
+      "executedAt": "2026-07-05T08:05:05.979Z"
+    },
+    {
+      "id": "8ee9c4b1-a470-48d8-9614-9c6e8df9ff23",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T07:56:27.180Z",
+      "executedAt": "2026-07-05T08:05:06.294Z"
+    },
+    {
+      "id": "240673e1-3b01-437c-9ddf-f3679a8210d0",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "executed",
+      "issuedAt": "2026-07-05T07:56:42.570Z",
+      "executedAt": "2026-07-05T08:05:06.428Z"
+    },
+    {
+      "id": "e153790d-0507-4ae4-b14f-f5480fa3c1a6",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T07:56:43.514Z",
+      "executedAt": "2026-07-05T08:05:06.892Z"
+    },
+    {
+      "id": "25e7f10b-585d-4b31-baea-2e0ed2474e05",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "wipe",
+      "status": "failed",
+      "issuedAt": "2026-07-05T07:56:44.133Z",
+      "executedAt": "2026-07-05T08:05:07.039Z"
+    },
+    {
+      "id": "2e0d5d58-afcd-4827-ad09-97bc47d371fc",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "wipe",
+      "status": "failed",
+      "issuedAt": "2026-07-05T07:56:44.736Z",
+      "executedAt": "2026-07-05T08:05:07.083Z"
+    },
+    {
+      "id": "0f1ce16c-0bf3-4b0f-98f4-b3b63d4ea0f4",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T07:59:15.490Z",
+      "executedAt": "2026-07-05T08:05:08.012Z"
+    },
+    {
+      "id": "e74536ad-f458-4b5a-83f5-8dc54cd816c3",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "alarm",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:00:25.848Z",
+      "executedAt": "2026-07-05T08:05:13.976Z"
+    },
+    {
+      "id": "adb9b96b-f34d-4f97-af42-2c9f033fcc00",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:00:31.038Z",
+      "executedAt": "2026-07-05T08:05:08.374Z"
+    },
+    {
+      "id": "1abba816-30f0-4de0-82c7-127408cd2ab6",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:00:32.047Z",
+      "executedAt": "2026-07-05T08:05:08.423Z"
+    },
+    {
+      "id": "fbacf8c7-53b5-48d3-bcf9-d1eb0771b827",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:00:32.476Z",
+      "executedAt": "2026-07-05T08:05:08.549Z"
+    },
+    {
+      "id": "502541c3-3597-4248-af7c-016dbed4dc90",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "wipe",
+      "status": "failed",
+      "issuedAt": "2026-07-05T08:00:42.483Z",
+      "executedAt": "2026-07-05T08:05:08.583Z"
+    },
+    {
+      "id": "7a51d5f8-7db4-480e-8639-dedf687c6274",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "alarm",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:04:26.522Z",
+      "executedAt": "2026-07-05T08:05:08.691Z"
+    },
+    {
+      "id": "16451e38-391d-4617-aba5-04cc09cae05e",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:04:27.636Z",
+      "executedAt": "2026-07-05T08:05:08.734Z"
+    },
+    {
+      "id": "cd0ee356-7902-4cd3-b9e1-b3b4834a6b55",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:04:28.158Z",
+      "executedAt": "2026-07-05T08:05:08.854Z"
+    },
+    {
+      "id": "370002ff-1a08-4c15-9619-794757d08369",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:05:16.932Z",
+      "executedAt": "2026-07-05T08:05:19.103Z"
+    },
+    {
+      "id": "ee597e21-0909-4426-b481-efaecfbae17b",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:05:22.467Z",
+      "executedAt": "2026-07-05T08:05:24.194Z"
+    },
+    {
+      "id": "9adf488b-33e9-4c31-a806-666d77670f14",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "alarm",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:05:23.977Z",
+      "executedAt": "2026-07-05T08:05:24.318Z"
+    },
+    {
+      "id": "84d436df-1785-4b72-a65e-a0d01bfff372",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "executed",
+      "issuedAt": "2026-07-05T08:05:26.317Z",
+      "executedAt": "2026-07-05T08:05:29.593Z"
+    },
+    {
+      "id": "f7049119-d23b-4cbf-8762-7a34f1f11436",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "wipe",
+      "status": "pending",
+      "issuedAt": "2026-07-05T08:36:17.261Z",
+      "executedAt": null
+    },
+    {
+      "id": "0a2a621a-721d-4ac1-90cd-f5dd393f1132",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "alarm",
+      "status": "pending",
+      "issuedAt": "2026-07-05T08:36:18.844Z",
+      "executedAt": null
+    },
+    {
+      "id": "db7b567c-2b43-4c5c-abcb-1a9d58f5e052",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "locate",
+      "status": "pending",
+      "issuedAt": "2026-07-05T08:36:19.696Z",
+      "executedAt": null
+    },
+    {
+      "id": "af1cd426-5b6d-4752-a3a0-cbf4581baf0d",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "lock",
+      "status": "pending",
+      "issuedAt": "2026-07-05T08:36:20.518Z",
+      "executedAt": null
+    },
+    {
+      "id": "408206fd-0ef4-4854-abdf-da50ae99f513",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "wipe",
+      "status": "pending",
+      "issuedAt": "2026-07-05T08:36:21.381Z",
+      "executedAt": null
+    },
+    {
+      "id": "930b2f76-3350-4aea-a458-65aa70087f79",
+      "deviceId": "5dc6901b-0de4-4e6f-9e62-b2d532436e01",
+      "type": "wipe",
+      "status": "pending",
+      "issuedAt": "2026-07-05T08:36:21.559Z",
+      "executedAt": null
+    }
+  ]
+}
