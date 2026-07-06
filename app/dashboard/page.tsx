@@ -105,7 +105,7 @@ export default function DashboardPage() {
                 ? "bg-neutral-900 border-neutral-700 shadow-[3px_3px_0px_0px_rgba(255,255,255,0.1)]"
                 : "bg-white border-neutral-900 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
             }`}>
-              <img src="/favicon.svg" alt="PhoneFind Logo" className="w-full h-full object-contain" />
+              <img src="/logo.png" alt="PhoneFind Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="flex items-center gap-2.5">
