@@ -195,7 +195,11 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-4 py-3.5 rounded-lg border-2 border-emerald-500 bg-emerald-600 hover:bg-emerald-500 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50"
+              className={`w-full mt-2 inline-flex items-center justify-center gap-2 text-xs font-mono font-bold uppercase tracking-wider px-4 py-3.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-50 ${
+                darkMode
+                  ? "bg-white text-black border-white hover:bg-neutral-200 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)]"
+                  : "bg-black text-white border-black hover:bg-neutral-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              }`}
             >
               {loading ? (
                 <>
